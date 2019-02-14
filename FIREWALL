@@ -22,15 +22,41 @@ iptables -t nat -P POSTROUTING ACCEPT
 
 #SE CIERRAN LAS ENTRADAS POR LOS PUERTOS QUE NO SE UTILIZARAN
 echo -e "ABRIENDO PUERTOS A CLIENTES..."
-iptables -A INPUT -s 192.168.50.30 -p tcp --dport 1:1024 -j ACCEPT
-iptables -A INPUT -s 192.168.50.30 -p udp --dport 1:1024 -j ACCEPT
-iptables -A INPUT -s 192.168.50.30 -p tcp --dport 10000 -j ACCEPT
-iptables -A INPUT -s 192.168.50.30 -p tcp --dport 3306 -j ACCEPT
+iptables -A INPUT -s 192.168.1.42 -p tcp --dport 1:1024 -j ACCEPT
+iptables -A INPUT -s 192.168.1.42 -p udp --dport 1:1024 -j ACCEPT
+iptables -A INPUT -s 192.168.1.42 -p tcp --dport 10000 -j ACCEPT
+iptables -A INPUT -s 192.168.1.42 -p tcp --dport 3306 -j ACCEPT
+iptables -A INPUT -s 192.168.50.66 -p tcp --dport 1:1024 -j ACCEPT
+iptables -A INPUT -s 192.168.50.66 -p udp --dport 1:1024 -j ACCEPT
+iptables -A INPUT -s 192.168.50.66 -p tcp --dport 10000 -j ACCEPT
+iptables -A INPUT -s 192.168.50.66 -p tcp --dport 3306 -j ACCEPT
+iptables -A INPUT -s 192.168.1.65 -p tcp --dport 1:1024 -j ACCEPT
+iptables -A INPUT -s 192.168.1.65 -p udp --dport 1:1024 -j ACCEPT
+iptables -A INPUT -s 192.168.1.65 -p tcp --dport 10000 -j ACCEPT
+iptables -A INPUT -s 192.168.1.65 -p tcp --dport 3306 -j ACCEPT
+iptables -A INPUT -s 192.168.43.95 -p tcp --dport 1:1024 -j ACCEPT
+iptables -A INPUT -s 192.168.43.95 -p udp --dport 1:1024 -j ACCEPT
+iptables -A INPUT -s 192.168.43.95 -p tcp --dport 10000 -j ACCEPT
+iptables -A INPUT -s 192.168.43.95 -p tcp --dport 3306 -j ACCEPT
+iptables -A INPUT -s 192.168.43.100 -p tcp --dport 1:1024 -j ACCEPT
+iptables -A INPUT -s 192.168.43.100 -p udp --dport 1:1024 -j ACCEPT
+iptables -A INPUT -s 192.168.43.100 -p tcp --dport 10000 -j ACCEPT
+iptables -A INPUT -s 192.168.43.100 -p tcp --dport 3306 -j ACCEPT
+
 
 #SE CONCEDE ACCESO TOTAL A LAS MAUQUINAS DEL GRUPO
 echo -e "CONCEDIENDO ACCESO A MAQUINAS INTERNAS..."
-iptables -A INPUT -s 192.168.50.30 -j ACCEPT
-iptables -A FORWARD -s 192.168.50.30 -j ACCEPT
+iptables -A INPUT -s 192.168.1.42 -j ACCEPT
+iptables -A FORWARD -s 192.168.1.42 -j ACCEPT
+iptables -A INPUT -s 192.168.50.66 -j ACCEPT
+iptables -A FORWARD -s 192.168.50.66 -j ACCEPT
+iptables -A INPUT -s 192.168.1.65 -j ACCEPT
+iptables -A FORWARD -s 192.168.1.65 -j ACCEPT
+iptables -A INPUT -s 192.168.43.95 -j ACCEPT
+iptables -A FORWARD -s 192.168.43.95 -j ACCEPT
+iptables -A INPUT -s 192.168.43.100 -j ACCEPT
+iptables -A FORWARD -s 192.168.43.100 -j ACCEPT
+
 
 #SE CIERRAN LAS ENTRADAS POR LOS PUERTOS QUE NO SE UTILIZARAN
 echo -e "CERRANDO PUERTOS..."
