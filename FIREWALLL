@@ -1,7 +1,7 @@
 #!/bin/sh
 # FIREWALL GRUPO 4
 #SO2A - 2019
- 
+
 clear
 echo -e "\n\t\t\t\tFIREWALL GRUPO 4"
 echo -e "\t\t\t\t  SO2A - 2019\n"
@@ -51,16 +51,16 @@ iptables -t nat -A POSTROUTING -o wlp1s0 -j MASQUERADE
 
 #BLOQUEO CONECTIVIDAD DMZ, WIRELESS
 echo -e "BLOQUEO DMZ"
-iptables -A INPUT -s 192.168.50.0/24  -d 192.168.43.0/24 -j  DROP #DMZ A SERVER WIRELESS
-iptables -A FORWARD -s 192.168.50.0/24 --proto icmp -d 192.168.43.0/24 -j DROP #SOLO PING DMZ A CLIENTES WIRELESS
-iptables -A FORWARD -s 192.168.50.0/24 --proto icmp -d 192.168.1.0/24 -j DROP  #SOLO PING DMZ A CLIENTES INTERNOS
-iptables -A FORWARD -s 192.168.43.0/24 --proto icmp -d 192.168.1.0/24 -j DROP #SOLO PING WIRELESS A INTERNA
-iptables -A FORWARD -s 192.168.1.0/24 --proto icmp -d 192.168.50.0/24 -j DROP #SOLO PING WIRELESS A DMZ
-iptables -A INPUT  -s 192.168.1.0/24 --proto icmp -d 192.168.50.20 -j DROP #SOLO PING WIRELESS A SERVER DMZ
-iptables -A INPUT -s 192.168.1.0/24 --proto icmp -d 192.168.43.2 -j DROP
-iptables -A INPUT -s 192.168.50.0/24  -d 192.168.1.0/24 -j DROP #DMZ A SERVER INTERNA
-iptables -A INPUT -s 192.168.43.0/24 -d 192.168.1.77 -j DROP #WIRELESS A SERVER INTERNA
-iptables -A INPUT -s 192.168.43.0/24 -d 192.168.50.20 -j DROP #WIRELESS A SERVER DMZ
+#iptables -A INPUT -s 192.168.50.0/24  -d 192.168.43.0/24 -j  DROP #DMZ A SERVER WIRELESS
+#iptables -A FORWARD -s 192.168.50.0/24 --proto icmp -d 192.168.43.0/24 -j DROP #SOLO PING DMZ A CLIENTES WIRELESS
+#iptables -A FORWARD -s 192.168.50.0/24 --proto icmp -d 192.168.1.0/24 -j DROP  #SOLO PING DMZ A CLIENTES INTERNOS
+#iptables -A FORWARD -s 192.168.43.0/24 --proto icmp -d 192.168.1.0/24 -j DROP #SOLO PING WIRELESS A INTERNA
+#iptables -A FORWARD -s 192.168.1.0/24 --proto icmp -d 192.168.50.0/24 -j DROP #SOLO PING WIRELESS A DMZ
+#iptables -A INPUT  -s 192.168.1.0/24 --proto icmp -d 192.168.50.20 -j DROP #SOLO PING WIRELESS A SERVER DMZ
+#iptables -A INPUT -s 192.168.1.0/24 --proto icmp -d 192.168.43.2 -j DROP
+#iptables -A INPUT -s 192.168.50.0/24  -d 192.168.1.0/24 -j DROP #DMZ A SERVER INTERNA
+#iptables -A INPUT -s 192.168.43.0/24 -d 192.168.1.77 -j DROP #WIRELESS A SERVER INTERNA
+#iptables -A INPUT -s 192.168.43.0/24 -d 192.168.50.20 -j DROP #WIRELESS A SERVER DMZ
 
 #PROXY
 #echo -e "ACTIVANDO PROXY PUERTO 3128"
@@ -71,9 +71,9 @@ iptables -t nat -A PREROUTING -i "wlp1s0" -p tcp --dport 443 -j REDIRECT --to-po
 iptables -A INPUT -p tcp --dport 3128 -j ACCEPT
 
 #REDIRECCIONAMIENTO DE PUERTOS DE CORREO Y FTP A LA  DMZ
-#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 2525 -j DNAT --to-destination 192.168.50.66:2525
-#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 995 -j DNAT --to-destination 192.168.50.66:995
-#iptables -t nat -A PREROUTING -s 102.168.1.0/24 -p tcp --dport 993 -j DNAT --to-destination 192.168.50.66:993
+#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 25 -j DNAT --to-destination 192.168.50.66:2525
+#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 25 -j DNAT --to-destination 192.168.50.66:25
+#iptables -t nat -A PREROUTING -s 102.168.1.0/24 -p tcp --dport 143 -j DNAT --to-destination 192.168.50.66:143
 #iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 110 -j DNAT --to-destination 192.168.50.66:110
 #iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 587 -j DNAT --to-destination 192.168.50.66:587
 #iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 8025 -j DNAT --to-destination 192.168.50.66:8025
