@@ -1,0 +1,41 @@
+
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+
+# INTERFACES DE RE GRUPO 4 SISTEMS OPERATIVOS 2 UMG 2019
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+#INTERFAZ WIRELESS
+auto wlp1s0 
+iface wlp1s0 inet static
+address 192.168.43.2
+netmask 255.255.255.0
+gateway 192.168.43.1
+	wpa-ssid G4
+	wpa-psk  soya2657
+dns-nameservers 192.168.43.2
+dns-search G4.db
+
+#INTERFAZ DMZ
+auto enx0087122206a7 
+iface enx0087122206a7 inet static
+address 192.168.50.20
+netmask 255.255.255.0
+dns-nameservers 192.168.50.20
+dns-search G4.db
+
+#INTERFAZ RED INTERNA
+auto enx009e9e9aa1c8
+iface enx009e9e9aa1c8 inet static
+address 192.168.1.77
+netmask 255.255.255.0
+dns-nameservers 192.168.1.77
+dns-search G4.db
+
+
