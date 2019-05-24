@@ -1,0 +1,17 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL	604800
+@	IN	SOA	psanalysts.wixsite.com. root.psanalysts.wixsite.com. (
+			      3		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN	NS	dns.psanalysts.wixsite.com.
+dns	IN	A	192.168.1.10
+dir2    IN	A	192.168.1.75
+dir3    IN	A	192.168.1.12
+	IN	MX 0	mail.psa.com.
+mail	IN 	A	192.168.50.66
