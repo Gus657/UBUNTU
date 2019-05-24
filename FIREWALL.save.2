@@ -51,18 +51,18 @@ iptables -t nat -A POSTROUTING -o wlp1s0 -j MASQUERADE
 
 #BLOQUEO CONECTIVIDAD DMZ, WIRELESS
 echo  "\t\tBLOQUEO DMZ"
-#iptables -A INPUT -s 192.168.50.0/24 --proto icmp  -d 192.168.43.0/24 -j  DROP #DMZ A SERVER WIRELESS
-#iptables -A FORWARD -s 192.168.50.0/24 --proto icmp -d 192.168.43.0/24 -j DROP #SOLO PING DMZ A CLIENTES WIRELESS
-#iptables -A FORWARD -s 192.168.50.0/24 --proto icmp -d 192.168.1.0/24 -j DROP  #SOLO PING DMZ A CLIENTES INTERNOS
-#iptables -A INPUT -s 192.168.50.0/24 --proto icmp -d 192.168.50.0/24 -j DROP #DMZ A DMZ
-#iptables -A FORWARD -s 192.168.43.0/24 --proto icmp -d 192.168.1.0/24 -j DROP #SOLO PING WIRELESS A INTERNA
-#iptables -A FORWARD -s 192.168.1.0/24 --proto icmp -d 192.168.50.0/24 -j DROP #SOLO PING WIRELESS A DMZ
-#iptables -A INPUT  -s 192.168.1.0/24 --proto icmp -d 192.168.50.20 -j DROP #SOLO PING WIRELESS A SERVER DMZ
-#iptables -A INPUT -s 192.168.1.0/24 --proto icmp -d 192.168.43.2 -j DROP
-#iptables -A INPUT -s 192.168.50.0/24 --proto icmp -d 192.168.1.0/24 -j DROP #DMZ A SERVER INTERNA
-#iptables -A INPUT -s 192.168.43.0/24 --proto icmp -d 192.168.1.77 -j DROP #WIRELESS A SERVER INTERNA
-#iptables -A INPUT -s 192.168.43.0/24 --proto icmp -d 192.168.50.20 -j DROP #WIRELESS A SERVER DMZ
-#iptables -A INPUT -s 192.168.43.0/24 --proto icmp -d 192.168.43.0/24 -j DROP #WIRELESS A WIRELESS
+iptables -A INPUT -s 192.168.50.0/24 --proto icmp  -d 192.168.43.0/24 -j  DROP #DMZ A SERVER WIRELESS
+iptables -A FORWARD -s 192.168.50.0/24 --proto icmp -d 192.168.43.0/24 -j DROP #SOLO PING DMZ A CLIENTES WIRELESS
+iptables -A FORWARD -s 192.168.50.0/24 --proto icmp -d 192.168.1.0/24 -j DROP  #SOLO PING DMZ A CLIENTES INTERNOS
+iptables -A INPUT -s 192.168.50.0/24 --proto icmp -d 192.168.50.0/24 -j DROP #DMZ A DMZ
+iptables -A FORWARD -s 192.168.43.0/24 --proto icmp -d 192.168.1.0/24 -j DROP #SOLO PING WIRELESS A INTERNA
+iptables -A FORWARD -s 192.168.1.0/24 --proto icmp -d 192.168.50.0/24 -j DROP #SOLO PING WIRELESS A DMZ
+iptables -A INPUT  -s 192.168.1.0/24   --proto icmp -d 192.168.50.20 -j DROP #SOLO PING WIRELESS A SERVER DMZ
+iptables -A INPUT -s 192.168.1.0/24 --proto icmp -d 192.168.43.2 -j DROP
+iptables -A INPUT -s 192.168.50.0/24 --proto icmp -d 192.168.1.0/24 -j DROP #DMZ A SERVER INTERNA
+iptables -A INPUT -s 192.168.43.0/24 --proto icmp -d 192.168.1.77 -j DROP #WIRELESS A SERVER INTERNA
+iptables -A INPUT -s 192.168.43.0/24 --proto icmp -d 192.168.50.20 -j DROP #WIRELESS A SERVER DMZ
+iptables -A INPUT -s 192.168.43.0/24 --proto icmp -d 192.168.43.0/24 -j DROP #WIRELESS A WIRELESS
 
 #PROXY
 echo  "\t\tACTIVANDO PROXY"
@@ -72,20 +72,21 @@ echo  "\t\tACTIVANDO PROXY"
 #iptables -t nat -A PREROUTING -i "wlp1s0" -p tcp --dport 443 -j REDIRECT --to-port 3128
 #iptables -A INPUT -p tcp --dport 3128 -j ACCEPT
 
-#REDIRECCIONAMIENTO DE PUERTOS DE CORREO, APACHE Y FTP A LA  DMZ
+#REDIRECCIONAMIENTO DE PUERTOS DE CORREO Y FTP A LA  DMZ
 echo  "\t\tREDIRECCIONAMIENTOS\n\n"
-#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport  21 - j DNAT --to-destination 192.168.50.70:21 #FTP
-#iptables -t nat -A PREROUTING -s 192.168.43.0/24 -p tcp --dport 21 -j DNAT --to-destination 192.168.50.70:21 #FTP
-#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 25 -j DNAT --to-destination 192.168.50.50:25 #SMTP
-#iptables -t nat -A PREROUTING -s 192.168.43.0/24 -p tcp --dport 25 -j DNAT --to-destination 192.168.50.50:25 #SMTP
-#iptables -t nat -A PREROUTING -s 192.168.43.0/24 -p tcp --dport 110 -j DNAT --to-destination 192.168.50.50:110 #POP3
-#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 110 -j DNAT --to-destination 192.168.50.50:110 #POP3
-#iptables -t nat -A PREROUTING -s 192.168.43.0/24 -p tcp --dport 143 -j DNAT --to-destination 192.168.50.50:143 #IMAP
-#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 143 -j DNAT --to-destination 192.168.50.50:143 #IMAP
-iptables -t nat -A PREROUTING -s 192.168.43.0/24 -p tcp --dport 80 -j DNAT --to-destination 192.168.50.50:80 #APACHE
-iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 80 -j DNAT --to-destination 192.168.50.50:80 #APACHE
+#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 25 -j DNAT --to-destination 192.168.50.66:25
+iptables -t nat -A PREROUTING -s 192.168.43.0/24 -p tcp --dport 25 -j DNAT --to-destination 192.168.50.66:25 #smtp
+#iptables -t nat -A PREROUTING -s 102.168.1.0/24 -p tcp --dport 993 -j DNAT --to-destination 192.168.50.66:993
+#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 110 -j DNAT --to-destination 192.168.50.66:110
+#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 587 -j DNAT --to-destination 192.168.50.66:587
+#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 8025 -j DNAT --to-destination 192.168.50.66:8025
+#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 143 -j DNAT --to-destination 192.168.50.66:143
+iptables -t nat -A PREROUTING -s 192.168.43.0/24 -p tcp --dport 143 -j DNAT --to-destination 192.168.50.66:143
+#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 465 -j DNAT --to-destination 192.168.50.66:465
+iptables -t nat -A PREROUTING -s 192.168.43.0/24 -p tcp --dport 80 -j DNAT --to-destination 192.168.50.66:80
+#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp --dport 443 -j DNAT --to-destination 192.168.50.66:443
+#iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p tcp -d 192.168.1.77/webmail -j DNAT --to-destination  192.168.50.66
 
 #REDIRECCION DE SQL DE INTERFAZ EXTERNA
 iptables -t nat -A PREROUTING -s 192.168.43.0/24 -p tcp --dport 3306  -j DNAT --to-destination 192.168.1.5:3306 #REDIRECCIONAMIENTO MYSQL
-iptables -t nat -A PREROUTING -s 192.168.50.66 -p tcp --dport 3306 -j DNAT --to-destination 192.168.1.5:3306 #REDIRECCIONAMIENTO MASTER / SLAVE
-iptables -t nat -A PREROUTING -s 192.168.1.5 -p tcp --dport 3306 -j DNAT --to-destination 192.168.50.66:3306
+  
